@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"math"
 	"os"
 	"os/exec"
 )
@@ -30,8 +31,34 @@ func readMaxNumber(invalid bool) int {
 	return maxNum
 }
 
+func trialDivision(maxNum int) {
+	primes := make([]int, 0)
+
+	for i := 2; i < maxNum; i++ {
+		isPrime := true
+		sqrt := math.Sqrt(float64(i))
+
+		for _, prime := range primes {
+			if float64(prime) > sqrt {
+				break
+			}
+
+			if i%prime == 0 {
+				isPrime = false
+				break
+			}
+		}
+
+		if isPrime {
+			primes = append(primes, i)
+		}
+	}
+
+	fmt.Println(primes)
+}
+
 func main() {
 	maxNum := readMaxNumber(false)
 
-	fmt.Println(maxNum)
+	trialDivision(maxNum)
 }

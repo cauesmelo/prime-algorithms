@@ -54,7 +54,7 @@ func trialDivision(maxNum int) {
 		}
 	}
 
-	// fmt.Println(primes)
+	fmt.Println(primes)
 }
 
 func sieveOfEratosthenes(maxNum int) {
@@ -69,7 +69,7 @@ func sieveOfEratosthenes(maxNum int) {
 		number := n + positionShift
 		currMultiple := number + number
 
-		for currMultiple < maxNum {
+		for currMultiple <= maxNum {
 			multiplePosition := currMultiple - positionShift
 
 			arr[multiplePosition] = true
@@ -91,9 +91,39 @@ func sieveOfEratosthenes(maxNum int) {
 	fmt.Println(primes)
 }
 
+type PoolItem struct {
+	n int
+	m int
+}
+
+func dijkstra(maxNum int) {
+	primes := []int{2}
+	pool := []PoolItem{{n: 2, m: 4}}
+
+	for i := 3; i < maxNum; i++ {
+		hasMultiple := false
+
+		for poolIdx := range pool {
+			if pool[poolIdx].m == i {
+				pool[poolIdx].m += pool[poolIdx].n
+
+				hasMultiple = true
+			}
+		}
+
+		if !hasMultiple {
+			primes = append(primes, i)
+			pool = append(pool, PoolItem{n: i, m: int(math.Pow(float64(i), 2))})
+		}
+	}
+
+	fmt.Println(primes)
+}
+
 func main() {
 	maxNum := readMaxNumber(false)
 
 	trialDivision(maxNum)
 	sieveOfEratosthenes(maxNum)
+	dijkstra(maxNum)
 }

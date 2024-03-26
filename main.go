@@ -54,6 +54,40 @@ func trialDivision(maxNum int) {
 		}
 	}
 
+	// fmt.Println(primes)
+}
+
+func sieveOfEratosthenes(maxNum int) {
+	arr := make([]bool, maxNum-1)
+	const positionShift = 2
+
+	for n, notPrime := range arr {
+		if notPrime {
+			continue
+		}
+
+		number := n + positionShift
+		currMultiple := number + number
+
+		for currMultiple < maxNum {
+			multiplePosition := currMultiple - positionShift
+
+			arr[multiplePosition] = true
+
+			currMultiple += number
+		}
+	}
+
+	primes := make([]int, 0)
+
+	for idx, notPrime := range arr {
+		if notPrime {
+			continue
+		}
+
+		primes = append(primes, idx+positionShift)
+	}
+
 	fmt.Println(primes)
 }
 
@@ -61,4 +95,5 @@ func main() {
 	maxNum := readMaxNumber(false)
 
 	trialDivision(maxNum)
+	sieveOfEratosthenes(maxNum)
 }

@@ -1,39 +1,10 @@
 package main
 
 import (
-	"fmt"
 	"math"
-	"os"
-	"os/exec"
 
 	"github.com/cauesmelo/prime-algorithms/internal/benchmark"
 )
-
-func clearTerminal() {
-	cmd := exec.Command("clear")
-	cmd.Stdout = os.Stdout
-	cmd.Run()
-}
-
-func readMaxNumber(invalid bool) int {
-	clearTerminal()
-
-	if invalid {
-		fmt.Println("Invalid input. The number have to be greater than 1")
-	}
-
-	var maxNum int
-	fmt.Println("Enter the maximum number: ")
-	fmt.Scan(&maxNum)
-
-	if maxNum < 2 {
-		return readMaxNumber(true)
-	}
-
-	clearTerminal()
-
-	return maxNum
-}
 
 func trialDivision(maxNum int) []int {
 	primes := make([]int, 0)
@@ -126,7 +97,6 @@ func dijkstra(maxNum int) []int {
 }
 
 func main() {
-	// maxNum := readMaxNumber(false)
 	maxNum := 9000
 
 	b := &benchmark.Benchmark{}

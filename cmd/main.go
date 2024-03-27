@@ -5,6 +5,8 @@ import (
 	"math"
 	"os"
 	"os/exec"
+
+	"github.com/cauesmelo/prime-algorithms/internal/benchmark"
 )
 
 func clearTerminal() {
@@ -28,10 +30,12 @@ func readMaxNumber(invalid bool) int {
 		return readMaxNumber(true)
 	}
 
+	clearTerminal()
+
 	return maxNum
 }
 
-func trialDivision(maxNum int) {
+func trialDivision(maxNum int) []int {
 	primes := make([]int, 0)
 
 	for i := 2; i < maxNum; i++ {
@@ -54,10 +58,10 @@ func trialDivision(maxNum int) {
 		}
 	}
 
-	fmt.Println(primes)
+	return primes
 }
 
-func sieveOfEratosthenes(maxNum int) {
+func sieveOfEratosthenes(maxNum int) []int {
 	arr := make([]bool, maxNum-1)
 	const positionShift = 2
 
@@ -88,7 +92,7 @@ func sieveOfEratosthenes(maxNum int) {
 		primes = append(primes, idx+positionShift)
 	}
 
-	fmt.Println(primes)
+	return primes
 }
 
 type PoolItem struct {
@@ -96,7 +100,8 @@ type PoolItem struct {
 	m int
 }
 
-func dijkstra(maxNum int) {
+// TODO: Fix implementation
+func dijkstra(maxNum int) []int {
 	primes := []int{2}
 	pool := []PoolItem{{n: 2, m: 4}}
 
@@ -117,13 +122,26 @@ func dijkstra(maxNum int) {
 		}
 	}
 
-	fmt.Println(primes)
+	return primes
 }
 
 func main() {
-	maxNum := readMaxNumber(false)
+	// maxNum := readMaxNumber(false)
+	maxNum := 9000
 
+	b := &benchmark.Benchmark{}
+
+	b.Start("Trial Division")
 	trialDivision(maxNum)
+	b.EndPrint()
+
+	b.Reset()
+	b.Start("Sieve of Eratosthenes")
 	sieveOfEratosthenes(maxNum)
+	b.EndPrint()
+
+	b.Reset()
+	b.Start("Dijkstra")
 	dijkstra(maxNum)
+	b.EndPrint()
 }

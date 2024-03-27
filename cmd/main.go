@@ -66,13 +66,13 @@ func sieveOfEratosthenes(maxNum int) []int {
 	return primes
 }
 
-type PoolItem struct {
-	n int
-	m int
-}
-
 // TODO: Fix implementation
 func dijkstra(maxNum int) []int {
+	type PoolItem struct {
+		n int
+		m int
+	}
+
 	primes := []int{2}
 	pool := []PoolItem{{n: 2, m: 4}}
 
@@ -97,7 +97,7 @@ func dijkstra(maxNum int) []int {
 }
 
 func main() {
-	maxNum := 9000
+	maxNum := 90000
 
 	b := &benchmark.Benchmark{}
 
@@ -105,12 +105,10 @@ func main() {
 	trialDivision(maxNum)
 	b.EndPrint()
 
-	b.Reset()
 	b.Start("Sieve of Eratosthenes")
 	sieveOfEratosthenes(maxNum)
 	b.EndPrint()
 
-	b.Reset()
 	b.Start("Dijkstra")
 	dijkstra(maxNum)
 	b.EndPrint()

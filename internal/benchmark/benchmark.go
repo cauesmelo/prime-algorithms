@@ -20,6 +20,8 @@ type Benchmark struct {
 }
 
 func (b *Benchmark) Start(str string) {
+	b.Reset()
+
 	b.Tag = str
 	b.startTime = time.Now()
 	runtime.ReadMemStats(&b.startMemory)
